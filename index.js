@@ -55,10 +55,10 @@ app.get('/', (req, res) => {
     res.send('Server Running');
 });
 
-app.post('/token', (req, res) => {
-    saveToken(req.body.token.value);
-    console.log(`Received push token, ${req.body.token.value}`);
-    res.send(`Received push token, ${req.body.token.value}`);
+app.post('/register', (req, res) => {
+    mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
+    // # TODO : callback correctly / send uuid in response
+    res.send(`uuid`);
 });
 
 app.post('/message', (req, res) => {
