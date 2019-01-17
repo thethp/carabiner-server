@@ -1,7 +1,7 @@
 import express from 'express';
 import Expo from 'expo-server-sdk';
 
-import users from './TalkToMongo';
+const mongo = require('./TalkToMongo');
 
 const app = express();
 const expo = new Expo();
