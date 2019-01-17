@@ -1,0 +1,16 @@
+{
+  "name": "carabiner",
+  "version": "1.0.0",
+  "description": "Server for Carabiner",
+  "main": "index.js",
+  "author": "Todd H. Page",
+  "license": "MIT",
+  "dependencies": {
+    "esm": "^3.0.84",
+    "expo-server-sdk": "^3.1.0",
+    "express": "^4.16.4"
+  },
+    "scripts": {
+	"serve": "node -r esm ./entry.js"
+    }
+}
