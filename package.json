@@ -8,9 +8,10 @@
   "dependencies": {
     "esm": "^3.0.84",
     "expo-server-sdk": "^3.1.0",
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "mongoose": "^5.4.4"
   },
-    "scripts": {
-	"serve": "node -r esm ./entry.js"
-    }
+  "scripts": {
+    "serve": "node -r esm ./entry.js"
+  }
 }
