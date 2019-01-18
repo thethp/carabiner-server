@@ -1,81 +1,42 @@
 import express from 'express';
 import Expo from 'expo-server-sdk';
 
-const mongo = require('./TalkToMongo');
+//# TO-DO : import these too? why am i doing this different?
+const mongo = require('./mongoCommunication');
+const notifications = require('./notifications');
 
 const app = express();
 const expo = new Expo();
 
-let savedTokens = [];
-//#TO-DO : set up server with forever or similar
-//#TO-DO : store token in users database, so we can notify them
-//#TO-DO : how to pop notification even if app open
-
-const saveToken = (token => {
-    if (savedTokens.indexOf(token === -1)) {
-	savedTokens.push(token);
-    }
-});
-
-const handlePushTokens = (message) => {
-	//# TO-DO : only send to the one user
-    let notifications = [];
-
-    for (let pushToken of savedTokens) {
-	if(!Expo.isExpoPushToken(pushToken)) {
-	    console.error(`Push token ${pushToken} is not a valid Expo push token`);
-	    continue;
-	}
-
-	notifications.push({
-	    to: pushToken,
-	    sound: 'default',
-	    title: 'Message received',
-	    body: message,
-	    data: { message }
-	});
-    }
-
-    let chunks = expo.chunkPushNotifications(notifications);
-    console.log('preparing to send chunks');
-    (async () => {
-	for (let chunk of chunks) {
-	    try {
-		let receipts = await expo.sendPushNotificationsAsync(chunk);
-		console.log(receipts);
-	    } catch (error) {
-		console.error(error);
-	    }
-	}
-    })();
-}
-
 app.use(express.json());
 
+//#TO-DO : only allow api access from my app.
+
 app.get('/', (req, res) => {
-    res.send('Server Running');
+  res.send('Server Running');
 });
 
 app.post('/register', (req, res) => {
-    mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
-    .then((_response) => {
-    	console.log('User Registered');
-    	res.json({success: true, uuid: _response});
-    })
-    .catch((_error) => {
-    	console.log('User registration failed.');
+  mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
+  .then((_response) => {
+  	console.log('User Registered');
+  	res.json({success: true, uuid: _response});
+  })
+  .catch((_error) => {
+  	console.log('User registration failed.');
 
-    	res.status(400).send({
-    		success: false,
-    		message: 'User registration failed: ' + _error
-    	});
-    });
+  	res.status(400).send({
+  		success: false,
+  		message: 'User registration failed: ' + _error
+  	});
+  });
 });
 
 app.post('/login', (req, res) => {
     mongo.login(req.body.user.username, req.body.user.password, req.body.token.value)
     .then((_response) => {
     	console.log('User logged in');
+
     	res.json({success: true, uuid: _response});
     })
     .catch((_error) => {
@@ -88,8 +49,29 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.post('/addContact', (req, res) => {
+  mongo.addContact(req.body.uuid, req.body.contactDetails)
+  .then((_response) => {
+    console.log('Contact added');
+
+    res.json({success: true});
+  })
+  .catch((_error) => {
+    console.log('Contact could not be added');
+
+    res.status(400).send({
+      success: false,
+      message: 'Contact could not be added: ' + _error
+    });
+  });
+});
+
+app.post('/startHookup', (req, res) => {
+  //mongo.startHookup(req.body.uuid,)
+});
+
 app.post('/message', (req, res) => {
-    handlePushTokens(req.body.message);
+    notifications.handlePushTokens(req.body.message);
     console.log(`Received message, ${req.body.message}`);
     res.send(`Received message, ${req.body.message}`);
 });
