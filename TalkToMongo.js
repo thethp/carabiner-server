@@ -18,9 +18,8 @@ client.connect((_err) => {
 
 export const register = (_username, _password, _expoToken) => {
   console.log('Registering user');
-
-  users.findOne({username: _username}, (_err, _res) => {
-    return new Promise ((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    users.findOne({username: _username}, (_err, _res) => {
       if(_res) {
         console.log('user exists');
         //# TO-DO : callback error with user exists error
@@ -46,6 +45,6 @@ export const register = (_username, _password, _expoToken) => {
           });
         });
       }
-    }
+    });
   });
 }
