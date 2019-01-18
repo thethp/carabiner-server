@@ -19,7 +19,7 @@ client.connect((_err) => {
 
 
 //ADD CONTACT
-export const addContact(_uuid, _contactDetails) {
+export const addContact = (_uuid, _contactDetails) => {
   console.log('Updating Contacts');
 
   return new Promise((resolve, reject) => {
