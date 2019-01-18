@@ -5,13 +5,13 @@ import bcrypt from 'bcrypt';
 const url = 'mongodb://localhost:27017';
 const dbName = 'test';
 const client = new mongo.MongoClient(url);
-const users;
+var users;
 
 client.connect((_err) => {
   assert.equal(null, _err, 'Error connecting to server: ' + _err);
   console.log('Connected to server successfully!');
 
-  db = client.db(dbName);
+  let db = client.db(dbName);
   users = db.collection('users');
 });
 
