@@ -89,7 +89,7 @@ export const getContact = (_uuid, _contactUuid) => {
       if(contactLocation >= 0) {
         resolve(contacts[contactLocation]);
 
-        console.log('Contact found.';
+        console.log('Contact found.');
       } else {
         reject("Contact doesn't exist")
 
