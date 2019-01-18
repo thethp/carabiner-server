@@ -47,20 +47,7 @@ export const register = (_username, _password, _expoToken) => {
 const isNewUser = (_username) => {
   users.findOne({username: _username}, (_err, _res) => {
       assert.equal(null, _err, 'Error finding user: ' + _err);
-      console.log(_res);
 
-      if(_res) {
-        console.log('tis');
-      } else {
-        console.log('tisnt');
-      }
-
-      if(_res !== null) {
-        console.log('tis 2');
-      } else {
-        console.log('tisnt 2');
-      }
-      
-      return _res ? true : false;
+      return _res ? false : true;
   });
 }
