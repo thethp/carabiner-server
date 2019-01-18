@@ -5,7 +5,7 @@ import uuidv4 from 'uuid/v4';
 
 const url = 'mongodb://localhost:27017';
 //# TO-DO : switch to a non-test server
-const dbName = 'test';
+const dbName = 'test2';
 const client = new mongo.MongoClient(url);
 var users;
 
