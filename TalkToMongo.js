@@ -19,7 +19,11 @@ client.connect((_err) => {
 export const register = (_username, _password, _expoToken) => {
   console.log('Registering user');
 
-    if(isNewUser(_username)) {
+  users.findOne({username: _username}, (_err, _res) => {
+    if(_res) {
+      console.log('user exists');
+      //# TO-DO : callback error with user exists error
+    } else {
       console.log('User is new');
       bcrypt.hash(_password, 10, (_err, _hash) => {
         assert.equal(null, _err, 'Error hashing password: ' + _err);
@@ -38,16 +42,6 @@ export const register = (_username, _password, _expoToken) => {
           //# TO-DO : callback error or success depending.
         });
       });
-    } else {
-      console.log('user exists');
-      //# TO-DO : callback error with user exists error
     }
-}
-
-const isNewUser = (_username) => {
-  users.findOne({username: _username}, (_err, _res) => {
-      assert.equal(null, _err, 'Error finding user: ' + _err);
-
-      return _res ? false : true;
-  });
+  }
 }
