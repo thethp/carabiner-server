@@ -19,7 +19,7 @@ client.connect((_err) => {
 
 
 //ADD CONTACT
-export const addContact = (_uuid, _contactDetails) => {
+export const addEditContact = (_uuid, _contactDetails) => {
   console.log('Updating Contacts');
 
   return new Promise((resolve, reject) => {
@@ -32,7 +32,7 @@ export const addContact = (_uuid, _contactDetails) => {
 
         let contactLocation = -1;
         user.contacts.forEach((contact, i) => {
-          if(contact.phone == _contactDetails.phone) {
+          if(contact.phone == _contactDetails.phone || contact.uuid == _contactDetails.uuid) {
             contactLocation = i;
           }
         });
@@ -62,6 +62,29 @@ export const addContact = (_uuid, _contactDetails) => {
 
       } else {
         reject('User not found');
+
+      }
+    });
+  });
+}
+
+//# TO-DO : universalize contact/friend language
+export const getContacts = (_uuid) => {
+  console.log('Getting list of contacts');
+
+  return new Promise((resolve, reject) => {
+    users.findOne({username: _username}, (_err, _res) => {
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+
+      let user = _res;
+
+      if(user) {
+        console.log('Returning contacts;')
+        resolve(user.contacts);
+
+      } else {
+        console.log("User doesn't exist");
+        reject("User doesn't exist");
 
       }
     });

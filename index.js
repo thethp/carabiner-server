@@ -12,14 +12,39 @@ app.use(express.json());
 
 //#TO-DO : only allow api access from my app.
 
+//GET CALLS
+
 app.get('/', (req, res) => {
   res.send('Server Running');
 });
+
+//uuid refers to users uuid
+app.get('/getContacts/:uuid', (req, res) => {
+  mongo.getContacts(req.params.uuid)
+  .then((_response) => {
+    console.log('Contacts retrieved');
+
+    res.json({success: true, contacts: _response});
+  })
+  .catch((_error) => {
+    console.log('Contract retrieval failed.');
+
+    res.status(400).send({
+      success: false,
+      message: 'Getting contacts failed: ' + _error
+    });
+  });
+
+});
+
+
+//POST CALLS
 
 app.post('/register', (req, res) => {
   mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
   .then((_response) => {
   	console.log('User Registered');
+
   	res.json({success: true, uuid: _response});
   })
   .catch((_error) => {
@@ -49,10 +74,10 @@ app.post('/login', (req, res) => {
     });
 });
 
-app.post('/addContact', (req, res) => {
-  mongo.addContact(req.body.uuid, req.body.contactDetails)
+app.post('/addEditContact', (req, res) => {
+  mongo.addEditContact(req.body.uuid, req.body.contactDetails)
   .then((_response) => {
-    console.log('Contact added');
+    console.log('Contacts updated');
 
     res.json({success: true});
   })
