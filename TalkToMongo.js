@@ -18,7 +18,7 @@ client.connect((_err) => {
 
 export const register = (_username, _password, _expoToken) => {
   console.log('Registering user');
-  
+
   return new Promise((resolve, reject) => {
     users.findOne({username: _username}, (_err, _res) => {
       if(_res) {
@@ -47,6 +47,37 @@ export const register = (_username, _password, _expoToken) => {
             resolve(uuid);
           });
         });
+      }
+    });
+  });
+}
+
+
+
+export const login = (_username, _password, _expoToken) => {
+  console.log('Logging in user');
+  
+  return new Promise((resolve, reject) => {
+    users.findOne({username: _username}, (_err, _res) => {
+      console.log('RESPONSE: ', _res);
+      let user = _res;
+
+      if(user) {
+        bcrypt.compare(_password, user.password, (_err, _res) => {
+          if(_res) {
+            console.log('Password correct: Log in');
+            //# TO-DO : if _expotoken is new, add to array
+            resolve(user.uuid);
+
+          } else {
+            reject('Wrong password');
+
+          }
+        });
+      } else {
+        console.log("User doesn't exist");
+        reject("User doesn't exist");
+        
       }
     });
   });

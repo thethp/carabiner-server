@@ -67,7 +67,23 @@ app.post('/register', (req, res) => {
 
     	res.status(400).send({
     		success: false,
-    		message: 'User registration failed'
+    		message: 'User registration failed: ' + _error
+    	});
+    });
+});
+
+app.post('/login', (req, res) => {
+    mongo.login(req.body.user.username, req.body.user.password, req.body.token.value)
+    .then((_response) => {
+    	console.log('User logged in');
+    	res.json({success: true, uuid: _response});
+    })
+    .catch((_error) => {
+    	console.log('User login failed.');
+
+    	res.status(400).send({
+    		success: false,
+    		message: 'User login failed: ' + _error
     	});
     });
 });
