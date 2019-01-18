@@ -171,9 +171,9 @@ export const register = (_username, _password, _expoToken) => {
   console.log('Registering user');
 
   return new Promise((resolve, reject) => {
-    assert.equal(null, _err, 'Error finding user: ' + _err);
-
     users.findOne({username: _username}, (_err, _res) => {
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+      
       if(_res) {
         console.log('User already exists');
         reject('User already exists');
