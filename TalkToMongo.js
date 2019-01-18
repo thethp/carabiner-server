@@ -17,11 +17,10 @@ client.connect((_err) => {
 });
 
 export const register = (_username, _password, _expoToken) => {
+  console.log('Registering user');
+  
   return new Promise((resolve, reject) => {
-    console.log('Registering user');
-
     users.findOne({username: _username}, (_err, _res) => {
-
       if(_res) {
         console.log('User already exists');
         reject('User already exists');
@@ -30,9 +29,7 @@ export const register = (_username, _password, _expoToken) => {
         console.log('User is new');
 
         bcrypt.hash(_password, 10, (_err, _hash) => {
-          if(!_err) {
-            reject('Error hashing password: ' + _err);
-          }
+          assert.equal(null, _err, 'Error hashing password: ' + _err);
           console.log('Hash successfully created');
 
           let uuid = uuidv4();
@@ -44,10 +41,7 @@ export const register = (_username, _password, _expoToken) => {
             contacts:   [],
 
           }, (_err, _result) => {
-            if(!_err) {
-              reject('Error adding user: ' + _err);
-            }
-
+            assert.equal(null, _err, 'Error adding user: ' + _err);
             console.log('User successfully added');
 
             resolve(uuid);

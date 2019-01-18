@@ -60,12 +60,13 @@ app.post('/register', (req, res) => {
     mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
     .then((_response) => {
     	console.log('User Registered');
-    	res.json({uuid: _response});
+    	res.json({success: true, uuid: _response});
     })
     .catch((_error) => {
     	console.log('User registration failed.');
-    	
+
     	res.status(400).send({
+    		success: false,
     		message: 'User registration failed'
     	});
     });
