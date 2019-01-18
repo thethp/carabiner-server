@@ -80,7 +80,7 @@ export const getContact = (_uuid, _contactUuid) => {
       let { contacts } = _res;
       let contactLocation = -1;
 
-      user.contacts.forEach((contact, i) => {
+      contacts.forEach((contact, i) => {
         if(contact.uuid == _contactUuid) {
           contactLocation = i;
         }
