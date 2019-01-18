@@ -18,6 +18,7 @@ const saveToken = (token => {
 });
 
 const handlePushTokens = (message) => {
+	//# TO-DO : only send to the one user
     let notifications = [];
 
     for (let pushToken of savedTokens) {

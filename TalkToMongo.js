@@ -31,7 +31,7 @@ export const register = (_username, _password, _expoToken) => {
         console.log('Hash successfully created');
 
         users.insertOne({
-            uuid:      uuidv4(),
+          uuid:       uuidv4(),
           username:   _username,
           password:   _hash,
           expoTokens: [_expoToken],
