@@ -28,6 +28,8 @@ export const addContact(_uuid, _contactDetails) {
       let user = _res;
 
       if(user) {
+        console.log('User found: ', user.contacts);
+
         let contactLocation = -1;
         user.contacts.forEach((contact, i) => {
           if(contact.phone == _contactDetails.phone) {
@@ -39,19 +41,23 @@ export const addContact(_uuid, _contactDetails) {
           user.contacts[contactLocation] = _contactDetails;
 
           console.log('Contact updated: ', user.contacts);
-          
-          users.updateOne(
-            { uuid: _uuid },
-            { $set: { contacts: user.contacts } },
-            (_err, _res) => {
-              if(_err) {
-                reject('Error updating contacts: ' + _err);
-              } else {
-                resolve(true);
-              }
-            }
-          );
+        } else {
+          user.contacts.push(_contactDetails);
+
+          console.log('Contact added: ', user.contacts);
         }
+
+        users.updateOne(
+          { uuid: _uuid },
+          { $set: { contacts: user.contacts } },
+          (_err, _res) => {
+            if(_err) {
+              reject('Error updating contacts: ' + _err);
+            } else {
+              resolve(true);
+            }
+          }
+        );
 
       } else {
         reject('User not found');
