@@ -1,6 +1,7 @@
 import mongo from 'mongodb';
 import assert from 'assert';
 import bcrypt from 'bcrypt';
+import uuidv4 from 'uuid/v4';
 
 const url = 'mongodb://localhost:27017';
 const dbName = 'test';
@@ -25,7 +26,7 @@ export const register = (_username, _password, _expoToken) => {
         console.log('Hash successfully created');
 
         users.insertOne({
-          uuid:       a?(b|Math.random()*16>>b/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/1|0|(8)/g,c),
+            uuid:      uuidv4(),
           username:   _username,
           password:   _hash,
           expoTokens: [_expoToken],
@@ -45,7 +46,7 @@ export const register = (_username, _password, _expoToken) => {
 
 const isNewUser = (_username) => {
   users.findOne({username: _username}, (_err, _res) => {
-    console.log('Hm', _err, _res);
-    return _err ? false : true;
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+      return _res ? true : false;
   });
 }
