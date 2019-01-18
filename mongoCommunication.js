@@ -69,6 +69,38 @@ export const addEditContact = (_uuid, _contactDetails) => {
 }
 
 //# TO-DO : universalize contact/friend language
+//GET CONTACT
+export const getContact = (_uuid, _contactUuid) => {
+  console.log('Getting specific contact');
+
+  return new Promise((resolve, reject) => {
+    users.findOne({uuid: _uuid}, (_err, _res) => {
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+
+      let { contacts } = _res;
+      let contactLocation = -1;
+
+      user.contacts.forEach((contact, i) => {
+        if(contact.uuid == _contactUuid) {
+          contactLocation = i;
+        }
+      });
+
+      if(contactLocation >= 0) {
+        resolve(contacts[contactLocation]);
+
+        console.log('Contact found.';
+      } else {
+        reject("Contact doesn't exist")
+
+        console.log("Contact doesn't exist");
+      }
+
+    });
+  });
+}
+
+//GET CONTACTS
 export const getContacts = (_uuid) => {
   console.log('Getting list of contacts');
 

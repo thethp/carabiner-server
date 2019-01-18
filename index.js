@@ -27,14 +27,31 @@ app.get('/getContacts/:uuid', (req, res) => {
     res.json({success: true, contacts: _response});
   })
   .catch((_error) => {
-    console.log('Contract retrieval failed.');
+    console.log('Contact retrieval failed.');
 
     res.status(400).send({
       success: false,
       message: 'Getting contacts failed: ' + _error
     });
   });
+});
 
+//uuid refers to users uuid, contactUuid refers to... you get it
+app.get('/getContacts/:uuid/specificContact/:contactUuid', (req, res) => {
+  mongo.getContact(req.params.uuid, req.params.contactUuid)
+  .then((_response) => {
+    console.log('Contact retrieved');
+
+    res.json({success: true, contact: _response});
+  })
+  .catch((_error) => {
+    console.log('Contact retrieval failed.');
+
+    res.status(400).send({
+      success: false,
+      message: 'Getting contacts failed: ' + _error
+    });
+  });
 });
 
 
