@@ -37,7 +37,7 @@ app.get('/getContacts/:uuid', (req, res) => {
 });
 
 //uuid refers to users uuid, contactUuid refers to... you get it
-app.get('/getContact/:uuid/specificContact/:contactUuid', (req, res) => {
+app.get('/getContacts/:uuid/specificContact/:contactUuid', (req, res) => {
   mongo.getContact(req.params.uuid, req.params.contactUuid)
   .then((_response) => {
     console.log('Contact retrieved');
