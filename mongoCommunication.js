@@ -73,7 +73,7 @@ export const getContacts = (_uuid) => {
   console.log('Getting list of contacts');
 
   return new Promise((resolve, reject) => {
-    users.findOne({username: _username}, (_err, _res) => {
+    users.findOne({uuid: _uuid}, (_err, _res) => {
       assert.equal(null, _err, 'Error finding user: ' + _err);
 
       let user = _res;
