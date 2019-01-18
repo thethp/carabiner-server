@@ -42,6 +42,7 @@ export const addContact = (_uuid, _contactDetails) => {
 
           console.log('Contact updated: ', user.contacts);
         } else {
+          _contactDetails.uuid = uuidv4();
           user.contacts.push(_contactDetails);
 
           console.log('Contact added: ', user.contacts);
