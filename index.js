@@ -58,6 +58,8 @@ app.get('/', (req, res) => {
 
 app.post('/register', (req, res) => {
     mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
+    .then((_response) => {console.log('it worked?? ', _response)})
+    .catch((_error) => {console.log('it failed ', _error)});
     // # TODO : callback correctly / send uuid in response
     res.json({uuid: 'uuid'});
 });

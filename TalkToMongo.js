@@ -20,29 +20,32 @@ export const register = (_username, _password, _expoToken) => {
   console.log('Registering user');
 
   users.findOne({username: _username}, (_err, _res) => {
-    if(_res) {
-      console.log('user exists');
-      //# TO-DO : callback error with user exists error
-    } else {
-      console.log('User is new');
+    return new Promise ((resolve, reject) => {
+      if(_res) {
+        console.log('user exists');
+        //# TO-DO : callback error with user exists error
+        reject('User already exists');
+      } else {
+        console.log('User is new');
 
-      bcrypt.hash(_password, 10, (_err, _hash) => {
-        assert.equal(null, _err, 'Error hashing password: ' + _err);
-        console.log('Hash successfully created');
+        bcrypt.hash(_password, 10, (_err, _hash) => {
+          assert.equal(null, _err, 'Error hashing password: ' + _err);
+          console.log('Hash successfully created');
+          let uuid = uuidv4();
+          users.insertOne({
+            uuid:       uuid,
+            username:   _username,
+            password:   _hash,
+            expoTokens: [_expoToken],
+            contacts:   [],
+          }, (_err, _result) => {
+            assert.equal(null, _err, 'Error adding user: ' + _err);
+            console.log('User successfully added');
 
-        users.insertOne({
-          uuid:       uuidv4(),
-          username:   _username,
-          password:   _hash,
-          expoTokens: [_expoToken],
-          contacts:   [],
-        }, (_err, _result) => {
-          assert.equal(null, _err, 'Error adding user: ' + _err);
-          console.log('User successfully added');
-
-          //# TO-DO : callback error or success depending.
+            resolve(uuid);
+          });
         });
-      });
+      }
     }
   });
 }
