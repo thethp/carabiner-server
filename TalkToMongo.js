@@ -25,6 +25,7 @@ export const register = (_username, _password, _expoToken) => {
       //# TO-DO : callback error with user exists error
     } else {
       console.log('User is new');
+
       bcrypt.hash(_password, 10, (_err, _hash) => {
         assert.equal(null, _err, 'Error hashing password: ' + _err);
         console.log('Hash successfully created');
@@ -43,5 +44,5 @@ export const register = (_username, _password, _expoToken) => {
         });
       });
     }
-  }
+  });
 }
