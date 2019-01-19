@@ -1,3 +1,6 @@
+import Expo from 'expo-server-sdk';
+
+const expo = new Expo();
 const mongo = require('./mongoCommunication');
 
 export const startTimer = (_uuid, _time) => {
@@ -41,6 +44,7 @@ const sendAlert = (_tokenArray, _hookupName) => {
   for (let pushToken of _tokenArray) {
     console.log('hey you', pushToken);
 		if(!Expo.isExpoPushToken(pushToken)) {
+      console.log('Push token' + pushToken + 'is not a valid token?');
 	    console.log(`Push token ${pushToken} is not a valid Expo push token`);
 	    continue;
 		}

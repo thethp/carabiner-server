@@ -1,12 +1,10 @@
 import express from 'express';
-import Expo from 'expo-server-sdk';
 
 //# TO-DO : import these too? why am i doing this different?
 const mongo = require('./mongoCommunication');
 const notifications = require('./notifications');
 
 const app = express();
-const expo = new Expo();
 
 app.use(express.json());
 
