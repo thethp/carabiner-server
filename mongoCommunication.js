@@ -68,6 +68,43 @@ export const addEditContact = (_uuid, _contactDetails) => {
   });
 }
 
+//END HOOKUP DETAILS
+export const endHookup = (_uuid) => {
+  console.log('Ending hookup');
+
+  return new Promise((resolve, reject) => {
+    users.findOne({uuid: _uuid}, (_err, _res) => {
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+
+      let user = _res;
+
+      if(user) {
+        console.log('Ending Hookup entirely')
+        
+        users.updateOne(
+          { uuid: _uuid },
+          { $set: { 
+            isHookingUp: false,
+            hookUpDetails: {},
+          } },
+          (_err, _res) => {
+            if(_err) {
+              reject('Error ending hookup: ' + _err);
+            } else {
+              resolve(true);
+            }
+          }
+        );
+
+      } else {
+        console.log("User doesn't exist");
+        reject("User doesn't exist");
+
+      }
+    });
+  });
+}
+
 //# TO-DO : universalize contact/friend language
 //GET CONTACT
 export const getContact = (_uuid, _contactUuid) => {

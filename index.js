@@ -52,8 +52,45 @@ app.get('/getContacts/:uuid/specificContact/:contactUuid', (req, res) => {
   });
 });
 
+app.get('getHookupDetails/:uuid', (req, res) => {
+  mongo.getHookupDetails(req.params.uuid)
+  .then((_response) => {
+    console.log('Hookup Details Claimed: ', _response);
+
+    res.json({
+      success: true, 
+      isHookingUp: _response.isHookingUp,
+      hookUpDetails: _response.hookUpDetails,
+    });
+  })
+  .catch((_error) => {
+    console.log('Hookup details could not be gotten.');
+
+    res.status(400).send({
+      success: false,
+      message: 'Getting hookup failed: ' + _error
+    });
+  });
+});
+
 
 //POST CALLS
+app.post('/endHookup', (req, res) => {
+  mongo.endHookup(req.body.uuid)
+  .then((_response) => {
+    console.log('Hookup Ended');
+
+    res.json({success: true});
+  })
+  .catch((_error) => {
+    console.log('User registration failed.');
+
+    res.status(400).send({
+      success: false,
+      message: 'User registration failed: ' + _error
+    });
+  });
+});
 
 app.post('/register', (req, res) => {
   mongo.register(req.body.user.username, req.body.user.password, req.body.token.value)
