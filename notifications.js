@@ -36,13 +36,11 @@ const sendAlert = (_tokenArray, _hookupName) => {
 	//# TO-DO : only send to the one user
   let notifications = [];
   let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
-  console.log('wtf', notifications, message);
+  console.log('wtf', _tokenArray);
 
   for (let pushToken of _tokenArray) {
-    console.log('PLEASE');
 		if(!Expo.isExpoPushToken(pushToken)) {
-      console.log('WHAT');
-	    console.error(`Push token ${pushToken} is not a valid Expo push token`);
+	    console.log(`Push token ${pushToken} is not a valid Expo push token`);
 	    continue;
 		}
     console.log('todd', pushToken, 'comethru');
