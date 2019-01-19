@@ -7,7 +7,7 @@ export const startTimer = (_uuid, _time) => {
   setTimeout(this.checkIn(_uuid), 15000);
 }
 
-checkIn = (_uuid) => {
+const checkIn = (_uuid) => {
   console.log('Stopping the timer');
 
   mongo.getHookupDetails(_uuid)
@@ -30,7 +30,7 @@ checkIn = (_uuid) => {
 }
 
 
-sendAlert = (_tokenArray, _hookupName) => {
+const sendAlert = (_tokenArray, _hookupName) => {
 	//# TO-DO : only send to the one user
   let notifications = [];
   let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
