@@ -107,7 +107,6 @@ app.post('/addEditContact', (req, res) => {
 });
 
 app.post('/startHookup', (req, res) => {
-  console.log('tongue pop');
   mongo.startHookup(req.body.uuid, req.body.hookupDetails)
   .then((_response) => {
     console.log('hookupHasBegun');
