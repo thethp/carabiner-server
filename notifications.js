@@ -39,7 +39,9 @@ const sendAlert = (_tokenArray, _hookupName) => {
   console.log('wtf', notifications, message);
 
   for (let pushToken of _tokenArray) {
+    console.log('PLEASE');
 		if(!Expo.isExpoPushToken(pushToken)) {
+      console.log('WHAT');
 	    console.error(`Push token ${pushToken} is not a valid Expo push token`);
 	    continue;
 		}
