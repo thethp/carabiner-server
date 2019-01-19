@@ -4,7 +4,7 @@ export const startTimer = (_uuid, _time) => {
   //setTimeout(this.checkIn(_uuid, _time), _time*60000);
   console.log('Starting the timer');
 
-  setTimeout(checkIn(_uuid), 15000);
+  setTimeout(() => { checkIn(_uuid); }, 15000);
 }
 
 const checkIn = (_uuid) => {
