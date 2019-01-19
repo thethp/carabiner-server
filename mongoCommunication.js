@@ -257,7 +257,6 @@ export const startHookup = (_uuid, _hookupDetails) => {
             if(_err) {
               reject('Error starting Hookup: ' + _err);
             } else {
-              console.log('we out here');
               resolve(true);
             }
           }
