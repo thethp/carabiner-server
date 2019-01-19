@@ -31,6 +31,8 @@ const checkIn = (_uuid) => {
 
 
 const sendAlert = (_tokenArray, _hookupName) => {
+  console.log('Send the alert');
+  
 	//# TO-DO : only send to the one user
   let notifications = [];
   let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
