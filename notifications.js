@@ -36,6 +36,7 @@ const sendAlert = (_tokenArray, _hookupName) => {
 	//# TO-DO : only send to the one user
   let notifications = [];
   let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
+  console.log('wtf', notifications, message);
 
   for (let pushToken of _tokenArray) {
 		if(!Expo.isExpoPushToken(pushToken)) {
