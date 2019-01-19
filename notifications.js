@@ -32,7 +32,7 @@ const checkIn = (_uuid) => {
 
 const sendAlert = (_tokenArray, _hookupName) => {
   console.log('Send the alert');
-  
+
 	//# TO-DO : only send to the one user
   let notifications = [];
   let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
@@ -42,6 +42,7 @@ const sendAlert = (_tokenArray, _hookupName) => {
 	    console.error(`Push token ${pushToken} is not a valid Expo push token`);
 	    continue;
 		}
+    console.log('todd', pushToken, 'comethru');
 
 		notifications.push({
 	    to: pushToken,
@@ -51,6 +52,8 @@ const sendAlert = (_tokenArray, _hookupName) => {
 	    data: { message }
 		});
   }
+
+  console.log('farts', notifications);
 
   let chunks = expo.chunkPushNotifications(notifications);
   console.log('preparing to send chunks');
