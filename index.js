@@ -109,13 +109,22 @@ app.post('/addEditContact', (req, res) => {
 });
 
 app.post('/startHookup', (req, res) => {
-  //mongo.startHookup(req.body.uuid,)
-});
+  mongo.startHookup(req.body.uuid, req.body.hookupDetails)
+  .then((_response) => {
+    console.log('hookupHasBegun');
 
-app.post('/message', (req, res) => {
-    notifications.handlePushTokens(req.body.message);
-    console.log(`Received message, ${req.body.message}`);
-    res.send(`Received message, ${req.body.message}`);
+    notifications.startTimer(req.body.uuid, req.body.hookupDetails.checkInTime);
+
+    res.json({success: true});
+  })
+  .catch((_error) => {
+    console.log('Hookup could not be started');
+
+    res.status(400).send({
+      success: false,
+      message: 'Hookup could not be started: ' + _error
+    });
+  });
 });
 
 const PORT_NUMBER = 80;

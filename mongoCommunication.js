@@ -124,6 +124,35 @@ export const getContacts = (_uuid) => {
 }
 
 
+
+//GET HOOKUP DETAILS
+export const getHookupDetails = (_uuid) => {
+  console.log('Getting hookup details');
+
+  return new Promise((resolve, reject) => {
+    users.findOne({uuid: _uuid}, (_err, _res) => {
+      assert.equal(null, _err, 'Error finding user: ' + _err);
+
+      let user = _res;
+
+      if(user) {
+        console.log('Returning hookup details;')
+        resolve({
+          isHookingUp: user.isHookingUp,
+          expoTokens: user.expoTokens,
+          hookUpDetails: user.hookUpDetails,
+        });
+
+      } else {
+        console.log("User doesn't exist");
+        reject("User doesn't exist");
+
+      }
+    });
+  });
+}
+
+
 //LOGIN
 export const login = (_username, _password, _expoToken) => {
   console.log('Logging in user');
@@ -202,6 +231,40 @@ export const register = (_username, _password, _expoToken) => {
             resolve(uuid);
           });
         });
+      }
+    });
+  });
+}
+
+//START HOOKUP
+export const startHookup = (_uuid, _hookupDetails) => {
+  console.log('Starting Hookup');
+
+  return new Promise((resolve, reject) => {
+    users.findOne({uuid: _uuid}, (_err, _res) => {
+      assert.equal(null, _err, 'Error starting hookup: ' + _err);
+      let user = _res;
+
+      if(user) {
+
+        users.updateOne(
+          { uuid: _uuid },
+          { $set: { 
+            hookUpDetails: _hookupDetails, 
+            isHookingUp: true,
+          } },
+          (_err, _res) => {
+            if(_err) {
+              reject('Error starting Hookup: ' + _err);
+            } else {
+              resolve(true);
+            }
+          }
+        );
+
+      } else {
+        reject('User not found');
+
       }
     });
   });

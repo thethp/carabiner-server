@@ -1,26 +1,50 @@
-let savedTokens = [];
-//#TO-DO : how to pop notification even if app open
+const mongo = require('./mongoCommunication');
 
-const saveToken = (token => {
-    if (savedTokens.indexOf(token === -1)) {
-	savedTokens.push(token);
+export const startTimer = (_uuid, _time) => {
+  //setTimeout(this.checkIn(_uuid, _time), _time*60000);
+  console.log('Starting the timer');
+
+  setTimeout(this.checkIn(_uuid), 15000);
+}
+
+checkIn = (_uuid) => {
+  console.log('Stopping the timer');
+
+  mongo.getHookupDetails(_uuid)
+  .then((_response) => {
+    console.log('Hookup Details Claimed: ', _response);
+
+    if(_response.isHookingUp) {
+      console.log('Send check-in alert');
+
+      sendAlert(_response.expoTokens, _response.hookUpDetails.username);
+    } else {
+      console.log('Were not hooking up');
+
     }
-});
+  })
+  .catch((_error) => {
+    console.log('Hookup details could not be gotten.');
 
-export const handlePushTokens = (message) => {
+  });
+}
+
+
+sendAlert = (_tokenArray, _hookupName) => {
 	//# TO-DO : only send to the one user
   let notifications = [];
+  let message = 'You hooked up with ' + _hookupName + '. Let us know alls well.';
 
-  for (let pushToken of savedTokens) {
+  for (let pushToken of _tokenArray) {
 		if(!Expo.isExpoPushToken(pushToken)) {
-		    console.error(`Push token ${pushToken} is not a valid Expo push token`);
-		    continue;
+	    console.error(`Push token ${pushToken} is not a valid Expo push token`);
+	    continue;
 		}
 
 		notifications.push({
 	    to: pushToken,
 	    sound: 'default',
-	    title: 'Message received',
+	    title: 'Carabiner',
 	    body: message,
 	    data: { message }
 		});
