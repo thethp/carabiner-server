@@ -40,12 +40,12 @@ export const addEditContact = (_uuid, _contactDetails) => {
         if(contactLocation >= 0) {
           user.contacts[contactLocation] = _contactDetails;
 
-          console.log('Contact updated: ', user.contacts);
+          console.log('Contact updated:');
         } else {
           _contactDetails.uuid = uuidv4();
           user.contacts.push(_contactDetails);
 
-          console.log('Contact added: ', user.contacts);
+          console.log('Contact added:');
         }
 
         users.updateOne(
