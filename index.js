@@ -145,7 +145,7 @@ app.post('/addEditContact', (req, res) => {
 });
 
 app.post('/sendMessage', (req, res) => {
-  sms.sendSMS('12039077006', '18649185276', 'hello');
+  sms.sendSMS('12039077006', 'hello');
 });
 
 app.post('/startHookup', (req, res) => {
