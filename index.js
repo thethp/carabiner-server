@@ -54,6 +54,7 @@ app.get('/getContacts/:uuid/specificContact/:contactUuid', (req, res) => {
 });
 
 app.get('getHookupDetails/:uuid', (req, res) => {
+  console.log('wtf')
   mongo.getHookupDetails(req.params.uuid)
   .then((_response) => {
     console.log('Hookup Details Claimed: ', _response);
@@ -145,7 +146,8 @@ app.post('/addEditContact', (req, res) => {
 });
 
 app.post('/sendMessage', (req, res) => {
-  sms.sendSMS('12039077006', 'hello');
+  console.lob('sending sms');
+  sms.sendSMS('2039077006', 'hello');
 });
 
 app.post('/startHookup', (req, res) => {
