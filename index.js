@@ -3,6 +3,7 @@ import express from 'express';
 //# TO-DO : import these too? why am i doing this different?
 const mongo = require('./mongoCommunication');
 const notifications = require('./notifications');
+const sms = require('./sms');
 
 const app = express();
 
@@ -141,6 +142,10 @@ app.post('/addEditContact', (req, res) => {
       message: 'Contact could not be added: ' + _error
     });
   });
+});
+
+app.post('/sendMessage', (req, res) => {
+  sms.sendSMS('12039077006', '18649185276', 'hello');
 });
 
 app.post('/startHookup', (req, res) => {
