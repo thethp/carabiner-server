@@ -53,14 +53,15 @@ app.get('/getContacts/:uuid/specificContact/:contactUuid', (req, res) => {
   });
 });
 
-app.get('getHookupDetails/:uuid', (req, res) => {
-  console.log('wtf')
+//uuid refers to users uuid
+app.get('/getHookupDetails/:uuid', (req, res) => {
+  console.log('getting Hookup Details', req);
   mongo.getHookupDetails(req.params.uuid)
   .then((_response) => {
     console.log('Hookup Details Claimed: ', _response);
 
     res.json({
-      success: true, 
+      success: true,
       isHookingUp: _response.isHookingUp,
       hookUpDetails: _response.hookUpDetails,
     });
@@ -74,6 +75,7 @@ app.get('getHookupDetails/:uuid', (req, res) => {
     });
   });
 });
+
 
 
 //POST CALLS
