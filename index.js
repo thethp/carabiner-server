@@ -148,7 +148,7 @@ app.post('/addEditContact', (req, res) => {
 
 app.post('/sendMessage', (req, res) => {
   console.log('sending sms');
-  sms.sendSMS('2039077006', 'hello');
+  sms.sendSMS('NUMBER', 'hello');
 });
 
 app.post('/startHookup', (req, res) => {

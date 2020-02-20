@@ -5,7 +5,8 @@ import uuidv4 from 'uuid/v4';
 
 const url = 'mongodb://localhost:27017';
 //# TO-DO : switch to a non-test server
-const dbName = 'test2';
+const dbName = 'YOUR_DB_NAME';
+//# TO-DO : Use env file
 const client = new mongo.MongoClient(url);
 var users;
 
@@ -14,7 +15,7 @@ client.connect((_err) => {
   console.log('Connected to server successfully!');
 
   let db = client.db(dbName);
-  users = db.collection('users');
+  users = db.collection('YOUR_COLLECTION_NAME');
 });
 
 
