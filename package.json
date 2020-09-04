@@ -11,7 +11,7 @@
     "expo-server-sdk": "^3.1.0",
     "express": "^4.16.4",
     "mongod": "^2.0.0",
-    "mongodb": "^3.1.12",
+    "mongodb": "^3.1.13",
     "twilio": "^3.27.1",
     "uuid": "^3.3.2"
   },
