@@ -9,7 +9,7 @@
     "bcrypt": "^3.0.3",
     "esm": "^3.0.84",
     "expo-server-sdk": "^3.1.0",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "mongod": "^2.0.0",
     "mongodb": "^3.1.12",
     "twilio": "^3.27.1",
